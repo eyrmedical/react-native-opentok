@@ -47,6 +47,12 @@ public class PublisherView extends SessionView implements PublisherKit.Publisher
         session.setConnectionListener(this);
     }
 
+    /** Actions **/
+
+    public void cycleCamera() {
+        mPublisher.cycleCamera();
+    }
+
     /** Session listener **/
 
     @Override

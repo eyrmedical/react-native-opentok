@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { requireNativeComponent, View } from 'react-native';
+import { requireNativeComponent, View, findNodeHandle, TouchableHighlight, UIManager } from 'react-native';
 import React from 'react';
 import SessionViewProps from './SessionViewProps';
 import withLoadingSpinner from './withLoadingSpinner';
@@ -75,8 +75,26 @@ class PublisherView extends React.Component {
     onClientDisconnected: noop,
   };
 
+  cycleCamera() {
+    UIManager.dispatchViewManagerCommand(
+      findNodeHandle(this),
+      UIManager.RCTOpenTokPublisherView.Commands.cycleCamera,
+      [],
+    );
+  }
+
   render() {
-    return <RCTPublisherView {...this.props} />;
+    return (
+      <TouchableHighlight
+        onPress={this.cycleCamera}
+        style={this.props.style || {}}
+      >
+        <RCTPublisherView
+        ref={ref => this.publisher = ref}
+        {...this.props}
+        />
+      </TouchableHighlight>
+    );
   }
 }
 
