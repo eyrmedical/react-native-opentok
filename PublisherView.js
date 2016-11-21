@@ -77,7 +77,7 @@ class PublisherView extends React.Component {
 
   cycleCamera() {
     UIManager.dispatchViewManagerCommand(
-      findNodeHandle(this),
+      findNodeHandle(this._pubViewManager),
       UIManager.RCTOpenTokPublisherView.Commands.cycleCamera,
       [],
     );
@@ -85,15 +85,19 @@ class PublisherView extends React.Component {
 
   render() {
     return (
-      <TouchableHighlight
-        onPress={this.cycleCamera}
-        style={this.props.style || {}}
-      >
-        <RCTPublisherView
-        ref={ref => this.publisher = ref}
-        {...this.props}
-        />
-      </TouchableHighlight>
+        <View>
+          <TouchableHighlight
+            onPress={this.cycleCamera.bind(this)}
+            style={{height: 10, backgroundColor: '#EEE'}}
+          >
+            <Text style={{color: 'red', zIndex: 5}}>CYCLE</Text>
+          </TouchableHighlight>
+
+          <RCTPublisherView
+            ref={component => this._pubViewManager = component}
+            {...this.props}
+          />
+        </View>
     );
   }
 }
