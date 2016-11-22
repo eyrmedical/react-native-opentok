@@ -65,6 +65,12 @@ class PublisherView extends React.Component {
      * ```
      */
     onClientDisconnected: React.PropTypes.func,
+    /**
+     * This function is called on mount
+     * to provide a reference to a peer component to call cycleCamera
+     *
+     */
+    registerPublisher: React.PropTypes.func,
   };
 
   static defaultProps = {
@@ -75,7 +81,13 @@ class PublisherView extends React.Component {
     onClientDisconnected: noop,
   };
 
-  cycleCamera() {
+  componentDidMount() {
+    if (typeof this.props.registerPublisher === 'function') {
+      this.props.registerPublisher(this)
+    }
+  }
+
+  cycleCamera = () => {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this._pubViewManager),
       UIManager.RCTOpenTokPublisherView.Commands.cycleCamera,
@@ -85,19 +97,10 @@ class PublisherView extends React.Component {
 
   render() {
     return (
-        <View>
-          <TouchableHighlight
-            onPress={this.cycleCamera.bind(this)}
-            style={{height: 10, backgroundColor: '#EEE'}}
-          >
-            <Text style={{color: 'red', zIndex: 5}}>CYCLE</Text>
-          </TouchableHighlight>
-
-          <RCTPublisherView
-            ref={component => this._pubViewManager = component}
-            {...this.props}
-          />
-        </View>
+      <RCTPublisherView
+        ref={component => this._pubViewManager = component}
+        {...this.props}
+      />
     );
   }
 }
