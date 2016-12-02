@@ -3,6 +3,7 @@ package io.callstack.react.opentok;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.ThemedReactContext;
+import com.facebook.infer.annotation.Assertions;
 import com.opentok.android.Connection;
 import com.opentok.android.OpentokError;
 import com.opentok.android.Publisher;
@@ -50,7 +51,23 @@ public class PublisherView extends SessionView implements PublisherKit.Publisher
     /** Actions **/
 
     public void cycleCamera() {
+        Assertions.assertNotNull(mPublisher);
         mPublisher.cycleCamera();
+    }
+
+    public void destroy() {
+        Assertions.assertNotNull(mPublisher);
+        mPublisher.destroy();
+    }
+
+    public void mute() {
+        Assertions.assertNotNull(mPublisher);
+        mPublisher.setPublishAudio(true);
+    }
+
+    public void unmute() {
+        Assertions.assertNotNull(mPublisher);
+        mPublisher.setPublishAudio(false);
     }
 
     /** Session listener **/

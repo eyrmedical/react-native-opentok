@@ -87,6 +87,14 @@ class PublisherView extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    UIManager.dispatchViewManagerCommand(
+      findNodeHandle(this._pubViewManager),
+      UIManager.RCTOpenTokPublisherView.Commands.destroy,
+      [],
+    );
+  }
+
   cycleCamera = () => {
     UIManager.dispatchViewManagerCommand(
       findNodeHandle(this._pubViewManager),
@@ -94,6 +102,24 @@ class PublisherView extends React.Component {
       [],
     );
   }
+
+  mute = () => {
+    UIManager.dispatchViewManagerCommand(
+      findNodeHandle(this._pubViewManager),
+      UIManager.RCTOpenTokPublisherView.Commands.mute,
+      [],
+    );
+  }
+
+  unmute = () => {
+    UIManager.dispatchViewManagerCommand(
+      findNodeHandle(this._pubViewManager),
+      UIManager.RCTOpenTokPublisherView.Commands.unmute,
+      [],
+    );
+  }
+
+
 
   render() {
     return (

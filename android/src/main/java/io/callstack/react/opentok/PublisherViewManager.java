@@ -13,6 +13,9 @@ import javax.annotation.Nullable;
 public class PublisherViewManager extends SessionViewManager<PublisherView> {
 
   public static final int COMMAND_CYCLE_CAMERA = 1;
+  public static final int COMMAND_DESTROY = 2;
+  public static final int COMMAND_MUTE = 3;
+  public static final int COMMAND_UNMUTE = 4;
 
   @Override
   public String getName() {
@@ -26,7 +29,12 @@ public class PublisherViewManager extends SessionViewManager<PublisherView> {
 
   @Override
   public Map<String,Integer> getCommandsMap() {
-    return MapBuilder.of("cycleCamera", COMMAND_CYCLE_CAMERA);
+    return MapBuilder.of(
+      "cycleCamera", COMMAND_CYCLE_CAMERA,
+      "destroy", COMMAND_DESTROY,
+      "mute", COMMAND_MUTE,
+      "unmute", COMMAND_UNMUTE
+    );
   }
 
   @Override
@@ -40,6 +48,21 @@ public class PublisherViewManager extends SessionViewManager<PublisherView> {
     switch (commandType) {
       case COMMAND_CYCLE_CAMERA: {
         view.cycleCamera();
+        return;
+      }
+
+      case COMMAND_DESTROY: {
+        view.destroy();
+        return;
+      }
+
+      case COMMAND_MUTE: {
+        view.mute();
+        return;
+      }
+
+      case COMMAND_UNMUTE: {
+        view.unmute();
         return;
       }
 
